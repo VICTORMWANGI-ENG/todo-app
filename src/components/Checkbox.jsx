@@ -1,7 +1,27 @@
-const Checkbox = () => {
+/* eslint-disable react/prop-types */
+
+import { useState } from "react";
+
+const Checkbox = ({ todo, setTodoList, todoList }) => {
+  const [checked, setChecked] = useState(todo.completed);
+
+  function handleCheck() {
+    setChecked(checked);
+
+    const todoComplete = {
+      ...todo,
+      completed: checked,
+    };
+
+    const updatedTodoList = todoList.map((item) =>
+      item.id === todoComplete.id ? todoComplete : item,
+    );
+
+    setTodoList(updatedTodoList);
+  }
   return (
-    <label className="hamburger">
-      <input type="checkbox" />
+    <label className="hamburger" onClick={() => setChecked(!checked)}>
+      <input type="checkbox" checked={checked} onChange={handleCheck} />
       <svg viewBox="0 0 32 32">
         <path
           className="line line-top-bottom"
